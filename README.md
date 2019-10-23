@@ -1,5 +1,5 @@
-# ts handlers
-lambda functions in typescript workflow
+# asp.net core dynamodb project
+more aws, this time with more c# and nosql
 
 ## local dev installs
 * [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)

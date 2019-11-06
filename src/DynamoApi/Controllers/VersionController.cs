@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace DynamoApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/version")]
     public class VersionController
     {
         [HttpGet]
         public IActionResult GetVersion()
         {
-            
             // ReSharper disable once AssignNullToNotNullAttribute
             var version = Assembly.GetEntryAssembly()
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()

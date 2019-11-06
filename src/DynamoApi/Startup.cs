@@ -43,8 +43,6 @@ namespace DynamoApi
             
             app.UseSerilogRequestLogging();
 
-            app.UseHttpsRedirection();
-            
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

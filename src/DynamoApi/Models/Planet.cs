@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using Amazon.DynamoDBv2.DataModel;
 
 namespace DynamoApi.Models
@@ -7,15 +7,14 @@ namespace DynamoApi.Models
     public class Planet
     {
         [DynamoDBHashKey]
-        public int Id { get; set; }
+        public string Universe { get; set; }
+        
+        [DynamoDBRangeKey]
+        public string Name { get; set; }
         
         [DynamoDBVersion]
         public int? Version { get; set; }
         
-        [DynamoDBProperty]
-        public int AlienScore { get; set; }
-        
-        [DynamoDBProperty]
-        public string Moons { get; set; }
+        public List<Moon> Moons { get; set; }
     }
 }

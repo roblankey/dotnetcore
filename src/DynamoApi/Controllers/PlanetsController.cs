@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
@@ -9,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DynamoApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/planets")]
     public class PlanetsController : ControllerBase
     {
         private readonly IAmazonDynamoDB _dynamoClient;
@@ -19,23 +18,35 @@ namespace DynamoApi.Controllers
             _dynamoClient = dynamoClient;
         }
 
-        [HttpGet]
-        [Route("init")]
+        [HttpGet("init")]
         public async Task<IActionResult> Initialise()
         {
             var context = new DynamoDBContext(_dynamoClient, new DynamoDBContextConfig { SkipVersionCheck = true });
             var write = context.CreateBatchWrite<Planet>();
 
-            var random = new Random();
             write.AddPutItems(new List<Planet>
                 {
-                    new Planet { Id = random.Next(100), AlienScore = 0, Moons = "{ \"moon\": \"nasa\" }" },
-                    new Planet { Id = random.Next(100), AlienScore = 3, Moons = "{ \"io\": \"none\", \"betel\": \"unlikely\" }" },
-                    new Planet { Id = random.Next(100), AlienScore = 3, Moons = "{ \"hades\": \"unlikely (heat)\" }" },
-                    new Planet { Id = random.Next(100), AlienScore = 7, Moons = "{ \"jupiter\": \"somewhat likely\" }" },
-                    new Planet { Id = random.Next(100), AlienScore = 10, Moons = "{ \"ce-635\": \"likely\", \"ce-636\": \"very likely\" }" }
+                    new Planet { Universe = "Milky Way", Name = "Mercury", Moons = new List<Moon>() },
+                    new Planet { Universe = "Milky Way", Name = "Venus", Moons = new List<Moon>() },
+                    new Planet { Universe = "Milky Way", Name = "Earth", Moons = new List<Moon>
+                    {
+                        new Moon { Id = 1, Name = "Moon" }
+                    }},
+                    new Planet { Universe = "Milky Way", Name = "Mars", Moons = new List<Moon>
+                    {
+                        new Moon { Id = 1, Name = "Phobos" },
+                        new Moon { Id = 2, Name = "Deimos" }
+                    }},
+                    new Planet { Universe = "Milky Way", Name = "Jupiter", Moons = new List<Moon>
+                    {
+                        new Moon { Id = 1, Name = "Io" },
+                        new Moon { Id = 2, Name = "Europa" },
+                        new Moon { Id = 3, Name = "Ganymede" },
+                        new Moon { Id = 4, Name = "Callisto" }
+                    }}
                 }
-                );
+            );
+            
             await write.ExecuteAsync();
             return new OkResult();
         }

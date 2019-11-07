@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
+using Amazon.DynamoDBv2.Model;
 using DynamoApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -64,10 +65,7 @@ namespace DynamoApi.Controllers
         public async Task<List<Planet>> GetForUniverse(string universe)
         {
             var context = new DynamoDBContext(_dynamoClient);
-            var planets = await context.ScanAsync<Planet>(new List<ScanCondition>
-            {
-                new ScanCondition("Universe", ScanOperator.Equal, universe)
-            }).GetRemainingAsync();
+            var planets = await context.QueryAsync<Planet>(universe).GetRemainingAsync();
             return planets;
         }
         
@@ -75,11 +73,7 @@ namespace DynamoApi.Controllers
         public async Task<List<Planet>> GetForUniverseAndPlanet(string universe, string planet)
         {
             var context = new DynamoDBContext(_dynamoClient);
-            var planets = await context.ScanAsync<Planet>(new List<ScanCondition>
-            {
-                new ScanCondition("Universe", ScanOperator.Equal, universe),
-                new ScanCondition("Name", ScanOperator.Equal, planet)
-            }).GetRemainingAsync();
+            var planets = await context.QueryAsync<Planet>(universe, QueryOperator.Equal, new []{planet}).GetRemainingAsync();
             return planets;
         }
 

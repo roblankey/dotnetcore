@@ -9,5 +9,8 @@ more aws, this time with more c# and nosql
 * node
 * python
 
+## localstack launch
+`DATA_DIR=/tmp/localstack/data SERVICES=dynamodb localstack start`
+
 ## dynamodb setup
 `awslocal dynamodb create-table --table-name "Planets" --attribute-definitions '[{"AttributeName":"Universe","AttributeType":"S"},{"AttributeName":"Name","AttributeType":"S"}]' --key-schema '[{"AttributeName":"Universe","KeyType":"HASH"},{"AttributeName":"Name","KeyType":"RANGE"}]' --provisioned-throughput "ReadCapacityUnits=9,WriteCapacityUnits=3"`

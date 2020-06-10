@@ -9,7 +9,8 @@ namespace Solar.UnitTests.Models
 
         public PlanetTest()
         {
-            _planet = new Planet {
+            _planet = new Planet
+            {
                 Universe = "Milky Way", Name = "Jupiter"
             };
         }

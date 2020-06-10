@@ -15,13 +15,13 @@ namespace Solar.IntegrationTests.Controllers
         {
             _client = fixture.Client;
         }
-        
+
         [Fact]
         public async Task Can_Get_Planets()
         {
             var response = await _client.GetAsync("/planets");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            
+
             var actual = TestFixture.DeserializeResponseList<Planet>(response);
             Assert.NotNull(actual);
             Assert.NotEmpty(actual);

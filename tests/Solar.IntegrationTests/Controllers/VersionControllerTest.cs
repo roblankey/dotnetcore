@@ -15,7 +15,7 @@ namespace Solar.IntegrationTests.Controllers
         {
             _client = fixture.Client;
         }
-        
+
         [Fact]
         public async Task Can_Get_Version()
         {

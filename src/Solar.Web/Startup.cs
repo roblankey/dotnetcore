@@ -22,31 +22,6 @@ namespace Solar.Web
 {
     public class Startup
     {
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllers();
-            
-            services.AddHealthChecks()
-                .AddCheck<AliveHealthCheck>("alive_health_check")
-                .AddCheck<DynamoHealthCheck>("dynamo_health_check");
-            
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Example API", Version = "v1" });
-            });
-            
-            var dynamoDbConfig = Program.Configuration.GetSection("DynamoDb");
-            services.AddSingleton<IAmazonDynamoDB>(sp =>
-            {
-                var clientConfig = new AmazonDynamoDBConfig { 
-                    ServiceURL = dynamoDbConfig.GetValue<string>("LocalServiceUrl") 
-                };
-                return new AmazonDynamoDBClient(clientConfig);
-            });
-
-            services.AddScoped<IAsyncRepository<Planet>, PlanetRepository>();
-        }
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseHealthChecks("/health",
@@ -68,19 +43,13 @@ namespace Solar.Web
                         await context.Response.WriteAsync(result);
                     }
                 });
-            
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            
+
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+
             app.UseSerilogRequestLogging();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Example API v1");
-            });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Example API v1"); });
 
             app.UseRouting();
 
@@ -89,6 +58,32 @@ namespace Solar.Web
                 endpoints.MapControllers();
                 endpoints.MapHealthChecks("/health");
             });
+        }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllers();
+
+            services.AddHealthChecks()
+                .AddCheck<AliveHealthCheck>("alive_health_check")
+                .AddCheck<DynamoHealthCheck>("dynamo_health_check");
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Example API", Version = "v1"});
+            });
+
+            var dynamoDbConfig = Program.Configuration.GetSection("DynamoDb");
+            services.AddSingleton<IAmazonDynamoDB>(sp =>
+            {
+                var clientConfig = new AmazonDynamoDBConfig
+                {
+                    ServiceURL = dynamoDbConfig.GetValue<string>("LocalServiceUrl")
+                };
+                return new AmazonDynamoDBClient(clientConfig);
+            });
+
+            services.AddScoped<IAsyncRepository<Planet>, PlanetRepository>();
         }
     }
 }

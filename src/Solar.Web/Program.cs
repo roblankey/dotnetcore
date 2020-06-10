@@ -14,10 +14,12 @@ namespace Solar.Web
         public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", false, true)
-            .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
+            .AddJsonFile(
+                $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json",
+                true)
             .AddEnvironmentVariables()
             .Build();
-        
+
         public static int Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
@@ -26,13 +28,13 @@ namespace Solar.Web
                 .WriteTo.Debug()
                 .WriteTo.Console(new RenderedCompactJsonFormatter())
                 .CreateLogger();
-            
+
             try
             {
                 Log.Information("Getting the motors running...");
 
                 CreateHostBuilder(args).Build().Run();
-                
+
                 return 0;
             }
             catch (Exception ex)
@@ -46,12 +48,11 @@ namespace Solar.Web
             }
         }
 
-        private static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                })
+        private static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
                 .UseSerilog();
+        }
     }
 }

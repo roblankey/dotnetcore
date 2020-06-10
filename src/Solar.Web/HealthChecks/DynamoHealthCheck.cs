@@ -7,7 +7,7 @@ namespace Solar.Web.HealthChecks
     public class DynamoHealthCheck : IHealthCheck
     {
         public Task<HealthCheckResult> CheckHealthAsync(
-            HealthCheckContext context, 
+            HealthCheckContext context,
             CancellationToken cancellationToken = new CancellationToken())
         {
             return Task.FromResult(HealthCheckResult.Healthy("A healthy result."));

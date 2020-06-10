@@ -14,8 +14,8 @@ namespace Solar.Web.Controllers
             var version = Assembly.GetEntryAssembly()
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
                 ?.InformationalVersion;
-            
-            return Ok(new { Version = version });
+
+            return Ok(new {Version = version});
         }
     }
 }

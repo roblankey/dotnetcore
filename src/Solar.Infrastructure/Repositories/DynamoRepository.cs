@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
@@ -19,55 +20,53 @@ namespace Solar.Infrastructure.Repositories
             _tableName = tableName;
         }
 
-        public Task<int> CountAsync(ISpecification<T> spec)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<T> GetByIdAsync(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<T> FirstAsync(ISpecification<T> spec)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<T> FirstOrDefaultAsync(ISpecification<T> spec)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task<IReadOnlyList<T>> ListAllAsync()
-        {
-            var response = await _dynamoDb.QueryAsync(new QueryRequest
-            {
-                TableName = _tableName
-            });
-            
-            if (response == null) return new List<T>();
-            return new List<T>();
-        }
-
-        public Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public Task<T> AddAsync(T entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(T entity)
+        public Task<int> CountAsync(ISpecification<T> spec)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public Task DeleteAsync(T entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        public Task<T> FirstAsync(ISpecification<T> spec)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<T> FirstOrDefaultAsync(ISpecification<T> spec)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<T> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IReadOnlyList<T>> ListAllAsync()
+        {
+            var request = new ScanRequest(_tableName);
+            var response = await _dynamoDb.ScanAsync(request);
+            // if (response == null) 
+            return new List<T>();
+            // return response.Items.Select(item => JsonConvert.DeserializeObject<T>(item.Values))
+        }
+
+        public Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(T entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

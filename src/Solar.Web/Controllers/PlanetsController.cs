@@ -18,7 +18,9 @@ namespace Solar.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IReadOnlyList<Planet>> Get_All() =>
-            await _planetAsyncRepository.ListAllAsync();
+        public async Task<IReadOnlyList<Planet>> Get_All()
+        {
+            return await _planetAsyncRepository.ListAllAsync();
+        }
     }
 }

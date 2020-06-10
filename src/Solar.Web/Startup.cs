@@ -66,7 +66,7 @@ namespace Solar.Web
 
             services.AddHealthChecks()
                 .AddCheck<AliveHealthCheck>("alive_health_check")
-                .AddCheck<DynamoHealthCheck>("dynamo_health_check");
+                .AddCheck<DynamoDbHealthCheck>("dynamo_health_check");
 
             services.AddSwaggerGen(c =>
             {

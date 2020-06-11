@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.JsonPatch;
@@ -72,6 +73,7 @@ namespace Solar.Web.Controllers
             return NoContent();
         }
         
+        [ExcludeFromCodeCoverage]
         [HttpPut("milky-way")]
         public async Task<ActionResult<IReadOnlyList<Planet>>> Create_MilkyWay()
         {

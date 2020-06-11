@@ -8,7 +8,7 @@ namespace Solar.Web.Controllers
     public class VersionController : ControllerBase
     {
         [HttpGet]
-        public IActionResult GetVersion()
+        public ActionResult GetVersion()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
             var version = Assembly.GetEntryAssembly()

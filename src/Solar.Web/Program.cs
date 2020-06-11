@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +9,7 @@ using Serilog.Formatting.Compact;
 
 namespace Solar.Web
 {
+    [ExcludeFromCodeCoverage]
     public static class Program
     {
         public static int Main(string[] args)

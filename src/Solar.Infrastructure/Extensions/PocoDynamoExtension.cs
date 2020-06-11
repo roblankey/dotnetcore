@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using Amazon.DynamoDBv2;
@@ -9,6 +10,7 @@ using Solar.Core.Entities;
 
 namespace Solar.Infrastructure.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class PocoDynamoExtension
     {
         public static void AddPocoDynamo(this IServiceCollection services, AmazonDynamoDBConfig config)

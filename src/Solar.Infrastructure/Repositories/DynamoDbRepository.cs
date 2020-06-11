@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Ardalis.Specification;
@@ -18,23 +19,24 @@ namespace Solar.Infrastructure.Repositories
             _dynamoDb = pocoDynamo;
         }
 
-        public async Task<T> AddAsync(T entity)
+        [ExcludeFromCodeCoverage]
+        public virtual async Task<T> AddAsync(T entity)
         {
             entity.Id = _dynamoDb.Sequences.Increment<T>();
             return _dynamoDb.PutItem(entity);
         }
 
-        public async Task DeleteAsync(T entity)
+        public virtual async Task DeleteAsync(T entity)
         {
             _dynamoDb.DeleteItem<T>(entity.Id);
         }
 
-        public async Task<T> GetByIdAsync(long id)
+        public virtual async Task<T> GetByIdAsync(long id)
         {
             return _dynamoDb.GetItem<T>(id);
         }
 
-        public async Task<IReadOnlyList<T>> ListAllAsync()
+        public virtual async Task<IReadOnlyList<T>> ListAllAsync()
         {
             return _dynamoDb.GetAll<T>();
         }
@@ -44,7 +46,7 @@ namespace Solar.Infrastructure.Repositories
             return _dynamoDb.FromScan(spec.Criterias.First()).Exec().ToList();
         }
 
-        public async Task UpdateAsync(T entity)
+        public virtual async Task UpdateAsync(T entity)
         {
             _dynamoDb.PutItem(entity);
         }

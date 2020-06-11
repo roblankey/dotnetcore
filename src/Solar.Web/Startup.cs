@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Mime;
 using Amazon.DynamoDBv2;
@@ -23,6 +24,7 @@ using Solar.Web.HealthChecks;
 
 namespace Solar.Web
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         private readonly IConfiguration _configuration;

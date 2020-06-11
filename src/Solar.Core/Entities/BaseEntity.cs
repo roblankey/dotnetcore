@@ -2,6 +2,6 @@ namespace Solar.Core.Entities
 {
     public abstract class BaseEntity
     {
-        public int Id { get; protected set; }
+        public long Id { get; set; }
     }
 }

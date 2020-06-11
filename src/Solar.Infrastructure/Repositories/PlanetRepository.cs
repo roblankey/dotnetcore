@@ -1,13 +1,11 @@
-using Amazon.DynamoDBv2;
+using ServiceStack.Aws.DynamoDb;
 using Solar.Core.Entities;
 
 namespace Solar.Infrastructure.Repositories
 {
-    public class PlanetRepository : DynamoRepository<Planet>
+    public class PlanetRepository : DynamoDbRepository<Planet>
     {
-        private const string TableName = "Planets";
-
-        public PlanetRepository(IAmazonDynamoDB dynamoDb) : base(dynamoDb, TableName)
+        public PlanetRepository(IPocoDynamo dynamoDb) : base(dynamoDb)
         {
         }
     }
